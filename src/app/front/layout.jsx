@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FrontLayout({ children }) {
+  let user = null;
   const menus = [
     { name: "Akun", path: "/auth" },
     { name: "Perpustakaan", path: "/front/perpustakaan" },
@@ -16,16 +17,22 @@ export default function FrontLayout({ children }) {
   return (
     <>
       <div className="flex justify-end bg-black text-white">
-        {menus.map((menu) => {
+        {/* {menus.map((menu) => {
           return (
             <div className="m-4 uppercase font-medium text-sm">
               <Link href={menu.path}>{menu.name}</Link>
             </div>
           );
-        })}
+        })} */}
+        <div className="m-4 uppercase font-medium text-sm">
+          <Link href={"/auth"}>Akun</Link>
+        </div>
+        <div className="m-4 uppercase font-medium text-sm">
+          <Link href={"/front/perpustakaan"}>Perpustakaan</Link>
+        </div>
       </div>
       <div className="flex justify-evenly m-8">
-        <Image src={"vercel.svg"} width={125} height={125} />
+        <Image src={"/vercel.svg"} width={125} height={125} alt="Logo" />
         <div>
           <ul className="flex gap-4 font-medium">
             {navbarMenu.map((menu, index) => {

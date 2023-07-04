@@ -1,0 +1,83 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
+export default function RoleEditForm({ params: { id } }) {
+  const token = localStorage.getItem("token");
+  const router = useRouter();
+
+  const [roleId, setRoleId] = useState(id);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(process.env.API_URL + "/role/" + id);
+      if (response.ok) {
+        const data = await response.json();
+        setName(data.data.name);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    const response = await fetch(process.env.API_URL + `/role/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({ name }),
+    });
+    if (response.ok) {
+      Swal.fire("Success", "Role berhasil diubah", "success").then(() => {
+        router.replace("/admin/role");
+      });
+    } else {
+      Swal.fire("Gagal", "Role gagal diubah", "error");
+    }
+  };
+
+  return (
+    <div className="rounded shadow border p-4 flex flex-col justify-center items-center">
+      <h1>Tambah Role</h1>
+      <div className="mt-10">
+        <form onSubmit={submitForm} className="space-y-4">
+          <div>
+            <label htmlFor="name">ID</label>
+            <input
+              id="name"
+              name="name"
+              className="ml-5 border"
+              placeholder="Nama Role"
+              type="text"
+              readOnly
+              value={roleId}
+            />
+          </div>
+          <div>
+            <label htmlFor="name">Nama</label>
+            <input
+              id="name"
+              name="name"
+              className="ml-5 border"
+              placeholder="Nama Role"
+              type="text"
+              value={name}
+              required
+              onChange={(value) => setName(value.target.value)}
+            />
+          </div>
+          <input
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md text-sm"
+            type="submit"
+            value={"Ubah"}
+          />
+        </form>
+      </div>
+    </div>
+  );
+}
