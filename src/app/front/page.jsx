@@ -9,7 +9,7 @@ export default function HomePage() {
           When it comes to searching for books, there is only one place to turn
           to – MaNan Pus.
         </h2>
-        <button className="uppercase bg-red-600 px-4 py-2 mt-4 hover:bg-black">
+        <button className="uppercase bg-red-600 px-4 py-2 mt-4 hover:bg-black transition">
           search new
         </button>
       </div>

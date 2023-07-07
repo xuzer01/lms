@@ -1,3 +1,3 @@
 export default function AdminPage() {
-  return <>Ini Admm</>;
+  return <div className="rounded shadow border p-4">Dashboard</div>;
 }

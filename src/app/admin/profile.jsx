@@ -17,7 +17,7 @@ export default function ProfileButton() {
       <div className="cursor-pointer" onClick={() => setOpen(!isOpen)}>
         {user ? user.name : "John Doe"}{" "}
       </div>
-      <ul className="hidden">
+      <ul className={`${isOpen ? "block" : "hidden"} relative`}>
         <li>Akun</li>
         <li>Logout</li>
       </ul>

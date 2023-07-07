@@ -7,7 +7,7 @@ export default async function RolePage() {
       cache: "no-store",
     });
     const data = await res.json();
-    console.log(data);
+
     return data.data;
   };
   let roles = await getRoles();
