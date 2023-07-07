@@ -23,7 +23,7 @@ export default async function StaffPage({ searchParams }) {
   };
 
   let staffs = await getStaff();
-  console.log(isEmptyObject(searchParams));
+
   return (
     <>
       <div className="rounded shadow border p-4">

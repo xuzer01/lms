@@ -19,7 +19,6 @@ export default async function Perpustakaan() {
   };
 
   let perpustakaan = await getPerpustakaan();
-  console.log(perpustakaan);
 
   return (
     <div className="rounded shadow border p-4">

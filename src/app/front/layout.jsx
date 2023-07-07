@@ -12,7 +12,7 @@ export default function FrontLayout({ children }) {
   let [selectedIndex, setSelectedIndex] = useState(0);
   const navbarMenu = [
     { name: "Home", path: "/front" },
-    { name: "Layanan", path: "/front/service" },
+    { name: "Buku", path: "/front/buku" },
   ];
   return (
     <>
@@ -37,7 +37,7 @@ export default function FrontLayout({ children }) {
           <ul className="flex gap-4 font-medium">
             {navbarMenu.map((menu, index) => {
               return (
-                <li>
+                <li key={index}>
                   <Link
                     className={`${
                       selectedIndex === index ? "text-red-600" : "text-black"

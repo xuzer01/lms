@@ -6,7 +6,6 @@ import { DeleteIcon } from "@/app/lib/DeleteIcon";
 import Link from "next/link";
 
 export default function StaffTable({ staffs }) {
-  console.log(staffs);
   return (
     <>
       <h1 className="uppercase font-bold text-xl mb-10">

@@ -12,6 +12,7 @@ export async function getuserData(token) {
       },
     });
     if (response.ok) {
+      console.log("response ok");
       return await response.json();
     } else {
       return null;
