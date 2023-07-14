@@ -8,6 +8,7 @@ export default function AddBukuForm({ token }) {
   const [title, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
+  const [synopsis, setSynopsis] = useState("");
   const [release_date, setReleaseDate] = useState(Date.now());
 
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function AddBukuForm({ token }) {
         title,
         author,
         publisher,
+        synopsis,
         release_date,
       }),
     });
@@ -94,6 +96,21 @@ export default function AddBukuForm({ token }) {
                 required
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium" htmlFor="synopsis">
+                Synopsis
+              </label>
+              <textarea
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                onChange={(e) => setSynopsis(e.target.value)}
+              >
+                {synopsis}
+              </textarea>
             </div>
             {/* <div>
               <label

@@ -2,8 +2,10 @@
 
 import { redirect, useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RegisterForm() {
   const apiUrl = process.env.API_URL;
@@ -12,41 +14,41 @@ export default function RegisterForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("L");
+  const [phone, setPhone] = useState("");
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   const validateForm = () => {
+    setError(false);
     if (name === "") {
-      setError("Nama tidak boleh kosong");
-      return false;
+      toast("Nama tidak boleh kosong");
+      setError(true);
     }
     if (username === "") {
-      setError("Username tidak boleh kosong");
-      return false;
+      toast("username tidak boleh kosong");
+      setError(true);
     }
     if (password === "") {
-      setError("Password tidak boleh kosong");
-      return false;
+      toast("password tidak boleh kosong");
+      setError(true);
     }
     if (password !== rePassword) {
-      setError("Passwords tidak sama");
-      return false;
+      toast("Password tidak sama");
+      setError(true);
     }
-    return true;
-  };
-
-  const register = async () => {
-    const response = await fetch(apiUrl + "/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, username, password }),
-    });
-    if (response.ok) {
+    if (address === "") {
+      toast("Alamat tidak boleh kosong");
+      setError(true);
+    }
+    if (phone === "") {
+      toast("No HP tidak boleh kosong");
+      setError(true);
+    }
+    if (!error) {
       return true;
     } else {
-      setError("Username sudah digunakan");
       return false;
     }
   };
@@ -55,28 +57,30 @@ export default function RegisterForm() {
     e.preventDefault();
 
     //Valdiating form
-    if (!validateForm()) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error,
+    if (validateForm()) {
+      const response = await fetch(apiUrl + "/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          username,
+          password,
+          gender,
+          phone,
+          address,
+        }),
       });
-      return;
-    }
-    if (await register()) {
-      await Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Akun berhasil ditambahkan",
-        confirmButtonText: "Oke",
-      });
-      router.push("/auth");
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error,
-      });
+      if (response.ok) {
+        Swal.fire("Berhasil", "Pendaftaran berhasil", "success").then(() =>
+          router.push("/auth")
+        );
+      } else {
+        const data = await response.json();
+        const errors = data.errors;
+        errors.map((error) => toast(error.msg));
+      }
     }
   };
 
@@ -127,7 +131,7 @@ export default function RegisterForm() {
                 className="border shadow-md px-2"
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mb-5">
               <label htmlFor="password">Ulangi password</label>
               <input
                 value={rePassword}
@@ -138,6 +142,48 @@ export default function RegisterForm() {
                 placeholder="Ulangi password"
                 required
                 min={5}
+                className="border shadow-md px-2"
+              />
+            </div>
+            <div className="flex flex-col gap-2 mb-5">
+              <label htmlFor="password">Alamat</label>
+              <input
+                value={address}
+                onChange={(value) => setAddress(value.target.value)}
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Alamat"
+                required
+                className="border shadow-md px-2"
+              />
+            </div>
+            <div className="flex flex-col gap-2 mb-5">
+              <label htmlFor="password">Gender</label>
+              <select
+                className="bg-white"
+                name="gender"
+                id="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="L">Laki - Laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2 mb-5">
+              <label htmlFor="password">No Hp</label>
+              <input
+                value={phone}
+                onChange={(event) => {
+                  const result = event.target.value.replace(/\D/g, "");
+                  setPhone(result);
+                }}
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="No Hp"
+                required
                 className="border shadow-md px-2"
               />
             </div>

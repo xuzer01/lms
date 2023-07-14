@@ -1,11 +1,12 @@
 "use client";
 
+import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function PerpustakaanForm() {
-  const token = localStorage.getItem("token");
+  const token = getCookie("token");
   const router = useRouter();
   const [name, setName] = useState("");
   const [location, setLocation] = useState();

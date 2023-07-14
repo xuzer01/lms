@@ -2,17 +2,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import AccountMenu from "./AccountMenu";
 
 export default function FrontLayout({ children }) {
   let user = null;
-  const menus = [
-    { name: "Akun", path: "/auth" },
-    { name: "Perpustakaan", path: "/front/perpustakaan" },
-  ];
+  const menus = [{ name: "Akun", path: "/auth" }];
   let [selectedIndex, setSelectedIndex] = useState(0);
   const navbarMenu = [
     { name: "Home", path: "/front" },
     { name: "Buku", path: "/front/buku" },
+    {
+      name: "Keranjang",
+      path: "/front/keranjang",
+    },
   ];
   return (
     <>
@@ -25,10 +27,8 @@ export default function FrontLayout({ children }) {
           );
         })} */}
         <div className="m-4 uppercase font-medium text-sm">
-          <Link href={"/auth"}>Akun</Link>
-        </div>
-        <div className="m-4 uppercase font-medium text-sm">
-          <Link href={"/front/perpustakaan"}>Perpustakaan</Link>
+          {/* <Link href={"/auth"}>Akun</Link> */}
+          <AccountMenu />
         </div>
       </div>
       <div className="flex justify-evenly m-8">
