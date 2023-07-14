@@ -171,7 +171,11 @@ export default function Page() {
                 >
                   <option value="">Pilih</option>
                   {libraries.map((library) => {
-                    return <option value={library.id}>{library.name}</option>;
+                    return (
+                      <option key={library.id} value={library.id}>
+                        {library.name}
+                      </option>
+                    );
                   })}
                 </select>
               </div>

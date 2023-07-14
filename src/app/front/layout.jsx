@@ -32,7 +32,7 @@ export default function FrontLayout({ children }) {
         </div>
       </div>
       <div className="flex justify-evenly m-8">
-        <Image src={"/vercel.svg"} width={125} height={125} alt="Logo" />
+        <Image src={"/Logoo.jpg"} width={50} height={50} alt="Logo" />
         <div>
           <ul className="flex gap-4 font-medium">
             {navbarMenu.map((menu, index) => {

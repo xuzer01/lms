@@ -19,7 +19,7 @@ export default async function StaffAddForm() {
       <h1 className="uppercase font-bold text-xl mb-10">Pendaftaran Staff</h1>
 
       {users.map((user) => {
-        return <div>{user.name}</div>;
+        return <div key={user.id}>{user.name}</div>;
       })}
     </>
   );
